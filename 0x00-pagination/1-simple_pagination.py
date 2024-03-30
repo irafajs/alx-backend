@@ -4,7 +4,6 @@ Shebang to create a PY script
 """
 
 
-
 import csv
 import math
 from typing import List
@@ -15,6 +14,7 @@ def index_range(page: int, page_size: int) -> tuple:
     offset = (page - 1) * page_size
     dataset = offset + page_size
     return (offset, dataset)
+
 
 class Server:
     """Server class to paginate a database of popular baby names.
