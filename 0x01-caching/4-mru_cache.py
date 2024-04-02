@@ -7,24 +7,30 @@ Shebang to create a PY script
 BaseCaching = __import__('base_caching').BaseCaching
 
 
-class LIFOCache(BaseCaching):
-    """method to define LIFO caching method"""
+class MRUCache(BaseCaching):
+    """method to define MRU caching method"""
     def __init__(self):
         """reload init"""
         super().__init__()
         self.order = []
 
     def put(self, key, item):
-        """method to update the dictionay using LIFO"""
+        """method to update the dictionay using mru"""
         if key is not None and item is not None:
             if len(self.cache_data) >= self.MAX_ITEMS:
-                last_item = self.order.pop()
-                print('DISCARD: {}'.format(last_item))
-                del self.cache_data[last_item]
+                mru_item = self.order.pop()
+                print('DISCARD:', mru_item)
+                del self.cache_data[mru_item]
             self.cache_data[key] = item
+            if key in self.order:
+                self.order.remove(key)
             self.order.append(key)
 
     def get(self, key):
         """method to return valune in cache using the key args"""
         if key is not None:
-            return self.cache_data.get(key)
+            if key in self.cache_data:
+                self.order.remove(key)
+                self.order.append(key)
+                return self.cache_data[key]
+        return None
