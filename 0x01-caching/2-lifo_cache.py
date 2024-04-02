@@ -12,15 +12,17 @@ class LIFOCache(BaseCaching):
     def __init__(self):
         """reload init"""
         super().__init__()
+        self.order = []
 
     def put(self, key, item):
         """method to update the dictionay using FIFO"""
         if key is not None and item is not None:
             if len(self.cache_data) >= self.MAX_ITEMS:
-                last_item = next(reversed(self.cache_data))
+                last_item = self.order.pop()
                 print('DISCARD: {}'.format(last_item))
                 del self.cache_data[last_item]
             self.cache_data[key] = item
+            self.order.append(key)
 
     def get(self, key):
         """method to return valune in cache using the key args"""
