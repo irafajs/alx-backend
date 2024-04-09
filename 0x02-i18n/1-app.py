@@ -22,7 +22,7 @@ app.config.from_object(Config)
 
 babel = Babel(app)
 
-
+app.url_map.strict_slashes = False
 @app.route('/')
 def index() -> str:
     """index to run the home route"""
