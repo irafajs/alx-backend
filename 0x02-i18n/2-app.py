@@ -9,6 +9,13 @@ from flask_babel import Babel
 
 
 app = Flask(__name__)
+babel = Babel(app)
+
+
+@babel.localeselector
+def get_locale():
+    """method to define locale using babel"""
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
 class Config:
@@ -28,7 +35,7 @@ app.url_map.strict_slashes = False
 @app.route('/')
 def index() -> str:
     """index to run the home route"""
-    return render_template('1-index.html')
+    return render_template('2-index.html')
 
 
 if __name__ == '__main__':
