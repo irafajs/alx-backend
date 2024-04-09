@@ -21,10 +21,11 @@ app.config.from_object(Config)
 
 babel = Babel(app)
 
+
 @app.route('/')
 def index():
     """index to run the home route"""
-    return render_template('0-index.html')
+    return render_template('1-index.html')
 
 
 if __name__ == '__main__':
