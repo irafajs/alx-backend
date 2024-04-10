@@ -6,6 +6,7 @@ shebang to create a PY script
 
 from flask import Flask, render_template, request, g
 from flask_babel import Babel
+from typing import Union, Dict
 
 
 users = {
@@ -29,7 +30,7 @@ app.url_map.strict_slashes = False
 babel = Babel(app)
 
 
-def get_user(user_id):
+def get_user(user_id) -> Union[Dict, None]:
     """method to handle the logged user by id"""
     login_as = request.args.get('login_as')
     if login_as:
@@ -41,14 +42,14 @@ def get_user(user_id):
 
 
 @app.before_request
-def before_request():
+def before_request() -> None:
     """method to get user using get_user"""
     user_id = request.args.get('login_as')
     g.user = get_user(int(user_id)) if user_id else None
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
     """method to define locale using babel"""
     requested_locale = request.args.get('locale')
     if requested_locale:

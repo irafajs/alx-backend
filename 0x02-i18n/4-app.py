@@ -22,7 +22,7 @@ babel = Babel(app)
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
     """method to define locale using babel"""
     requested_locale = request.args.get('locale')
     if requested_locale:
