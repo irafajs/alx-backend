@@ -8,21 +8,6 @@ from flask import Flask, render_template, request
 from flask_babel import Babel
 
 
-app = Flask(__name__)
-babel = Babel(app)
-
-
-@babel.localeselector
-def get_locale():
-    """method to define locale using babel"""
-    #requested_locale = request.args.get('locale')
-    requested_locale = 'fr'
-    print(requested_locale)
-    if requested_locale:
-        return requested_locale
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
-
-
 class Config:
     """class to run config to en and UTC"""
     LANGUAGES = ["en", "fr"]
@@ -30,11 +15,19 @@ class Config:
     BABEL_DEFAULT_TIMEZONE = "UTC"
 
 
+app = Flask(__name__)
 app.config.from_object(Config)
-
+app.url_map.strict_slashes = False
 babel = Babel(app)
 
-app.url_map.strict_slashes = False
+
+@babel.localeselector
+def get_locale():
+    """method to define locale using babel"""
+    requested_locale = request.args.get('locale')
+    if requested_locale:
+        return requested_locale
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
 @app.route('/')
