@@ -7,7 +7,8 @@ shebang to create a PY script
 from flask import Flask, render_template, request, g
 from flask_babel import Babel
 from typing import Union, Dict
-
+import pytz
+from pytz.exceptions import UnknownTimeZoneError
 
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
@@ -64,7 +65,26 @@ def get_locale() -> str:
 
 
 @babel.timezoneselector
-def get_timezone
+def get_timezone():
+    """method to handle timezone using babel"""
+    requested_timezone = request.args.get('timezone')
+    if requested_timezone:
+        try:
+            pytz.timezone(requested_timezone)
+            return requested_timezone
+        except UnknownTimeZoneError:
+            pass
+
+    if g.user and 'timezone' in g.user:
+        try:
+            pytz.timezone(g.user['timezone'])
+            return g.user['timezone']
+        except UnknownTimeZoneError:
+            pass
+
+    return app.config['BABEL_DEFAULT_TIMEZONE']
+
+
 @app.route('/')
 def index() -> str:
     """index to run the home route"""
