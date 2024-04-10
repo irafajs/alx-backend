@@ -34,10 +34,10 @@ def get_user(user_id):
     login_as = request.args.get('login_as')
     if login_as:
         user_id = int(login_as)
-        if user_id in users:
-            return users.get(user_id)
-        else:
-            return None
+    if user_id in users:
+        return users[user_id]
+    else:
+        return None
 
 
 @app.before_request
