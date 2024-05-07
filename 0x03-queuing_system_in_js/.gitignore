@@ -1,0 +1,8 @@
+*main*
+pushauto
+babel.config.js
+database.csv
+package-lock.json
+node_modules/
+.eslintrc.js
+stash/
