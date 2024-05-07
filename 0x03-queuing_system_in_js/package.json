@@ -2,6 +2,7 @@
     "name": "queuing_system_in_js",
     "version": "1.0.0",
     "description": "",
+    "type": "module",
     "main": "index.js",
     "scripts": {
       "lint": "./node_modules/.bin/eslint",
