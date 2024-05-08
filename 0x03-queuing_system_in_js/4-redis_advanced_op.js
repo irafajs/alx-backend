@@ -1,4 +1,3 @@
-import redis from 'redis';
 import { createClient } from 'redis';
 
 const client = createClient();
@@ -12,12 +11,12 @@ client.on('error', (error) => {
 });
 
 const hashValue = {
-  Portland:  50,
-  Seattle:  80,
-  'New York':  20,
+  Portland: 50,
+  Seattle: 80,
+  'New York': 20,
   Bogota: 20,
   Cali: 40,
-  Paris:2,
+  Paris: 2,
 };
 
 const keys = Object.keys(hashValue);

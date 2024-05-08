@@ -1,6 +1,5 @@
-import { createClient } from 'redis';
+import redis, { createClient } from 'redis';
 import { promisify } from 'util';
-import redis from 'redis';
 
 const client = createClient();
 
@@ -12,7 +11,7 @@ client.on('error', (error) => {
   console.error(`Redis client not connected to the server: ${error}`);
 });
 
-function setNewSchool (schoolName, value) {
+function setNewSchool(schoolName, value) {
   client.set(schoolName, value, redis.print);
 }
 
